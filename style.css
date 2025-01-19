@@ -319,7 +319,11 @@ body {
         display: none;
       }
       
-      .videoContainer.full-screen .theater-btn .open {
+      .videoContainer.full-screen .theater-btn{
       display: none;
 }
+    .video-controls-container{
+      display: flex;
+      justify-content: space-between;
+    }
 }

@@ -134,16 +134,16 @@ function changePlaybackSpeed() {
 }
 
 //caption
-const caption = video.textTracks[0];
-caption.mode = "hidden";
+// const caption = video.textTracks[0];
+// caption.mode = "hidden";
 
-captionBtn.addEventListener("click", toogleCaption);
+// captionBtn.addEventListener("click", toogleCaption);
 
-function toogleCaption() {
-  const isHidden = caption.mode === "hidden";
-  caption.mode = isHidden ? "showing" : "hidden";
-  videoContainer.classList.toggle("captions", isHidden);
-}
+// function toogleCaption() {
+//   const isHidden = caption.mode === "hidden";
+//   caption.mode = isHidden ? "showing" : "hidden";
+//   videoContainer.classList.toggle("captions", isHidden);
+// }
 
 //Duration
 video.addEventListener("loadeddata", () => {
