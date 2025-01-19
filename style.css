@@ -74,11 +74,14 @@ body {
   opacity: 1;
 }
 
+
+
 .video-controls-container .controls {
   display: flex;
   gap: 0.5rem;
   padding: 0.25rem;
   align-items: center;
+  
 }
 .video-controls-container .controls button {
   background: none;
@@ -264,7 +267,7 @@ body {
 
 @media (max-width: 480px){
       body{
-        padding-top: 20px;
+        padding-top: 50px;
       }
       .video-controls-container{
           height:  50px;
@@ -272,6 +275,8 @@ body {
       }
       .videoContainer{
         width: 100%;
+        border-radius: 0;
+      
       }
 
       .theater-btn{
@@ -280,5 +285,10 @@ body {
       .timeline-container .timeline .preview-img{
         display: none;
       }
+     
+      .volume-container .volume-slider{
+        display: none;
+      }
       
+
 }
