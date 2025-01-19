@@ -319,7 +319,7 @@ body {
         display: none;
       }
       
-      .videoContainer.full-screen .theater-btn {
+      .videoContainer.full-screen .theater-btn .open {
       display: none;
 }
 }
