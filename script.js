@@ -1,5 +1,3 @@
-
-
 const playPauseBtn = document.querySelector(".play-pause-btn");
 const miniplayerbtn = document.querySelector(".mini-player-btn");
 const theaterbtn = document.querySelector(".theater-btn");
@@ -68,16 +66,23 @@ document.addEventListener("mousemove", (e) => {
 
 let isScrubbing = false;
 let wasPaused;
-timelineContainer.addEventListener("pointerdown", e => {
+timelineContainer.addEventListener("pointerdown", (e) => {
   timelineContainer.setPointerCapture(e.pointerId);
   isScrubbing = true;
-  toggleScrubbing(e)
+  toggleScrubbing(e);
   timelineContainer.addEventListener("pointermove", handleTimelineUpdate);
-  timelineContainer.addEventListener("pointerup", e => {
-    isScrubbing = false;
-    toggleScrubbing(e)
-    timelineContainer.removeEventListener("pointermove", handleTimelineUpdate);
-  }, {once: true});
+  timelineContainer.addEventListener(
+    "pointerup",
+    (e) => {
+      isScrubbing = false;
+      toggleScrubbing(e);
+      timelineContainer.removeEventListener(
+        "pointermove",
+        handleTimelineUpdate
+      );
+    },
+    { once: true }
+  );
 });
 
 function toggleScrubbing(e) {
@@ -94,7 +99,7 @@ function toggleScrubbing(e) {
   }
 }
 function clamp(min, value, max) {
-  return Math.max(min, Math.min(value, max))
+  return Math.max(min, Math.min(value, max));
 }
 function handleTimelineUpdate(e) {
   const rect = timelineContainer.getBoundingClientRect();
@@ -103,8 +108,8 @@ function handleTimelineUpdate(e) {
     1,
     Math.floor((percent * video.duration) / 10)
   );
-  const min = (previewImg.offsetWidth / 2) / rect.width
-  const max = 1 - min
+  const min = previewImg.offsetWidth / 2 / rect.width;
+  const max = 1 - min;
   const previewPercent = clamp(min, percent, max);
   const previewImgSrc = `../assets/previewimages/previewimages${previewImgNumber}.jpg`;
   previewImg.src = previewImgSrc;

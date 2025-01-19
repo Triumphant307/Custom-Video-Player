@@ -261,3 +261,24 @@ body {
 #playback {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@media (max-width: 480px){
+      body{
+        padding-top: 20px;
+      }
+      .video-controls-container{
+          height:  50px;
+          width: 100%;
+      }
+      .videoContainer{
+        width: 100%;
+      }
+
+      .theater-btn{
+        display: none;
+      }
+      .timeline-container .timeline .preview-img{
+        display: none;
+      }
+      
+}
