@@ -74,14 +74,11 @@ body {
   opacity: 1;
 }
 
-
-
 .video-controls-container .controls {
   display: flex;
   gap: 0.5rem;
   padding: 0.25rem;
   align-items: center;
-  
 }
 .video-controls-container .controls button {
   background: none;
@@ -100,10 +97,10 @@ body {
   opacity: 1;
 }
 
-.videoContainer.paused .pause-icon {
+.videoContainer.paused .pause-icon  .play{
   display: none;
 }
-.videoContainer:not(.paused) .play-icon {
+.videoContainer:not(.paused) .play-icon .pause-btn{
   display: none;
 }
 
@@ -264,66 +261,61 @@ body {
 #playback {
   font-family: Arial, Helvetica, sans-serif;
 }
-.play{
-    position: absolute;
-    width: 50px;
-    height: 50px;
-  background-color: rgba(0,0,0,0.25);
+.play {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.25);
   border-radius: 100%;
   top: 50%;
   left: 50%;
   margin: -30px 0 0 -30px;
   cursor: pointer;
 }
-.pause-btn{
-      position: absolute;
-    width: 50px;
-    height: 50px;
-  background-color: rgba(0,0,0,0.25);
+
+.pause-btn {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.25);
   border-radius: 100%;
   top: 50%;
   left: 50%;
   margin: -30px 0 0 -30px;
- cursor: pointer;
+  cursor: pointer;
 }
-.videoContainer.paused  .pause-btn{
-      display: none;
+.videoContainer.paused .pause-btn {
+  display: none;
 }
-.videoContainer:not(.paused) .play{
+.videoContainer:not(.paused) .play {
   display: none;
 }
 
-
 @media (max-width: 480px){
-      body{
-        padding-top: 50px;
-      }
-      .video-controls-container{
-          height:  50px;
-          width: 100%;
-      }
-      .videoContainer{
-        width: 100%;
-        border-radius: 0;
-      
-      }
+  body {
+    padding-top: 50px;
+  }
+  .video-controls-container {
+    height: 50px;
+    width: 100%;
+  }
+  .videoContainer {
+    width: 100%;
+    border-radius: 0;
+  }
 
-      .theater-btn{
-        display: none;
-      }
-      .timeline-container .timeline .preview-img{
-        display: none;
-      }
-     
-      .volume-container .volume-slider{
-        display: none;
-      }
-      
-      .videoContainer.full-screen .theater-btn{
-      display: none;
-}
-    .video-controls-container{
-      display: flex;
-      justify-content: space-between;
-    }
+  .theater-btn {
+    display: none;
+  }
+  .timeline-container .timeline .preview-img {
+    display: none;
+  }
+
+  .volume-container .volume-slider {
+    display: none;
+  }
+
+  .videoContainer.full-screen .theater-btn {
+    display: none;
+  }
 }
