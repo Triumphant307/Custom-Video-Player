@@ -15,6 +15,7 @@ const video = document.querySelector("video");
 const timeline = document.querySelector(".timeline");
 const timelineContainer = document.querySelector(".timeline-container");
 const videoContainer = document.querySelector(".videoContainer");
+const videoControls = document.querySelector(".video-controls-container");
 
 video.textTracks[0].mode = "hidden";
 
@@ -50,6 +51,9 @@ document.addEventListener("keydown", (e) => {
       break;
   }
 });
+
+//
+
 
 //Timeline
 timelineContainer.addEventListener("mousemove", handleTimelineUpdate);

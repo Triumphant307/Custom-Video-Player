@@ -12,6 +12,7 @@ body {
   padding-top: 10px;
   margin: 0;
   height: 300vh;
+  background-color: black;
 }
 
 .videoContainer {
@@ -27,14 +28,20 @@ body {
   overflow: hidden;
   overflow-x: hidden;
 }
+
 .videoContainer.theater,
 .videoContainer.full-screen {
   max-width: initial;
   width: 100%;
+ 
 }
 
 .videoContainer.theater {
   max-height: 90vh;
+}
+
+.videoContainer .theater-btn{
+    border-radius: none;
 }
 
 .videoContainer.full-screen {
@@ -97,10 +104,10 @@ body {
   opacity: 1;
 }
 
-.videoContainer.paused .pause-icon  .play{
+.videoContainer.paused .pause-icon{
   display: none;
 }
-.videoContainer:not(.paused) .play-icon .pause-btn{
+.videoContainer:not(.paused) .play-icon{
   display: none;
 }
 
