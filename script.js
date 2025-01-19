@@ -1,4 +1,5 @@
 const playPauseBtn = document.querySelector(".play-pause-btn");
+const playonScreen = document.querySelector(".play");
 const miniplayerbtn = document.querySelector(".mini-player-btn");
 const theaterbtn = document.querySelector(".theater-btn");
 const fullScreen = document.querySelector(".full-screen-btn");
@@ -220,9 +221,11 @@ function toogleTheaterMode() {
 function tooogleFullScreenMode() {
   if (document.fullscreenElement == null) {
     videoContainer.requestFullscreen();
+     screen.orientation.lock("landscape");
   } else {
     document.exitFullscreen();
   }
+ 
 }
 
 function tooogleMiniPlayerMode() {
@@ -245,6 +248,8 @@ video.addEventListener("leavepictureinpicture", () => {
   videoContainer.classList.remove("mini-player");
 });
 //play/pause
+playonScreen.addEventListener("click" , tooglePlay)
+
 playPauseBtn.addEventListener("click", tooglePlay);
 video.addEventListener("click", tooglePlay);
 
