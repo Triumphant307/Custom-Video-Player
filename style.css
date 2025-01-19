@@ -1,13 +1,17 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 body {
   margin: 0;
   width: 100%;
-  padding: 0;
+  /* padding: 10px; */
+  padding-top: 10px;
   margin: 0;
+  height: 300vh;
 }
 
 .videoContainer {
@@ -17,7 +21,11 @@ body {
   display: flex;
   justify-content: center;
   margin-inline: auto;
+  align-items: center;
   background-color: black;
+  border-radius: 10px;
+  overflow: hidden;
+  overflow-x: hidden;
 }
 .videoContainer.theater,
 .videoContainer.full-screen {
@@ -33,9 +41,11 @@ body {
   max-height: 100vh;
 }
 
-video {
+.videoContainer video {
   width: 100%;
+  border-radius: inherit;
 }
+
 .video-controls-container {
   position: absolute;
   bottom: 0;
@@ -45,6 +55,7 @@ video {
   z-index: 100;
   opacity: 0;
   transition: opacity 150ms ease-in-out;
+  border-radius: inherit;
 }
 .video-controls-container::before {
   content: "";
@@ -145,30 +156,31 @@ video {
   gap: 0.25rem;
   flex-grow: 1;
 }
-.videoContainer.captions .caption-btn{
+.videoContainer.captions .caption-btn {
   border-bottom: 3px solid red;
 }
-.video-controls-container  .controls button.wide-btn{
-   width:  50px;
+.video-controls-container .controls button.wide-btn {
+  width: 50px;
 }
-.timeline-container{
+.timeline-container {
   height: 7px;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   cursor: pointer;
   display: flex;
-  align-items: center; 
-
+  align-items: center;
+  padding-inline: 10px;
+  touch-action: none;
 }
-.timeline-container:hover .timeline{
+.timeline-container:hover .timeline {
   height: 100%;
 }
-.timeline{
-   background-color: rgba(100, 100, 100, .5);
+.timeline {
+  background-color: rgba(100, 100, 100, 0.5);
   height: 3px;
   width: 100%;
   position: relative;
 }
-.timeline::before{
+.timeline::before {
   content: "";
   position: absolute;
   left: 0;
@@ -177,69 +189,75 @@ video {
   right: calc(100% - var(--preview-position) * 100%);
   background-color: rgb(150, 150, 150);
   display: none;
-
 }
 
-.timeline::after{
+.timeline::after {
   content: "";
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
   right: calc(100% - var(--progress-position) * 100%);
-  background-color: red;
+  background-color: rgb(255, 95, 95);
 }
-.timeline  .thumb-indicator{
+.timeline .thumb-indicator {
   --scale: 0;
   position: absolute;
   transform: translateX(-50%) scale(var(--scale));
   height: 200%;
   top: -50%;
-  left: calc(var(--progress-position ) * 100%);
-  background-color: red;
+  left: calc(var(--progress-position) * 100%);
+  background-color: rgb(255, 95, 95);
   border-radius: 50%;
   transition: transform 150ms ease-in-out;
   aspect-ratio: 1 / 1;
 }
 
-.timeline .preview-img{
+.timeline .preview-img {
   position: absolute;
   height: 80px;
   aspect-ratio: 16 / 9;
   top: -1rem;
-  transform: translate(-50% , -100%);
-  left: calc(var(--preview-position) * 100%);
-  border-radius: .25rem;
+  transform: translate(-50%, -100%);
+  left: calc(var(--preview-img-position) * 100%);
+  border-radius: 0.25rem;
   border: 2px solid white;
   display: none;
 }
-.thumbnail-img{
- position: absolute;
- top: 0;
- left: 0;
- right: 0;
- bottom: 0;
- width: 100%;
- height: 100%;
- display: none ;
+.thumbnail-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
 }
 
-.videoContainer.scrubbing  .thumb-img{
+.videoContainer.scrubbing .thumb-img {
   display: block;
 }
-.videoContainer.scrubbing  .thumb-img,
-.timeline-container:hover .preview-img{
-   display: block;
-}
-.videoContainer.scrubbing  .thumb-img,
-.timeline-container:hover .thumb-indicator{
-    --scale: 1;
-}
-.videoContainer.scrubbing  .thumb-img,
-.timeline-container:hover .timeline::before{
+.videoContainer.scrubbing .thumb-img,
+.timeline-container:hover .preview-img {
   display: block;
 }
-.videoContainer.scrubbing  .thumb-img,
-.timeline-container:hover .timeline{
+.videoContainer.scrubbing .thumb-img,
+.timeline-container:hover .thumb-indicator {
+  --scale: 1;
+}
+.videoContainer.scrubbing .thumb-img,
+.timeline-container:hover .timeline::before {
+  display: block;
+}
+.videoContainer.scrubbing .thumb-img,
+.timeline-container:hover .timeline {
   height: 100%;
+}
+
+.duration-container {
+  font-family: Arial, Helvetica, sans-serif;
+}
+#playback {
+  font-family: Arial, Helvetica, sans-serif;
 }
