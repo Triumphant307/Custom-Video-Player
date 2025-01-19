@@ -16,8 +16,33 @@ const timeline = document.querySelector(".timeline");
 const timelineContainer = document.querySelector(".timeline-container");
 const videoContainer = document.querySelector(".videoContainer");
 const videoControls = document.querySelector(".video-controls-container");
+const hover = document.querySelector(".hover")
 
 video.textTracks[0].mode = "hidden";
+
+let hoverTimeoutId;
+videoContainer.addEventListener("mouseover", setHover);
+videoContainer.addEventListener("mouseleave" , removeHover);
+
+function setHover (){
+  videoContainer.classList.add("hover");
+  keepHover()
+}
+
+function keepHover() {
+        hoverTimeoutId = setTimeout(removeHover , 3000);
+}
+
+
+function removeHover (){
+  videoContainer.classList.remove("hover");       
+}
+
+
+
+
+
+
 
 document.addEventListener("keydown", (e) => {
   const tagName = document.activeElement.tagName.toLowerCase();
@@ -49,7 +74,7 @@ document.addEventListener("keydown", (e) => {
     case "arrowright":
       skip(+5);
       break;
-  }
+  } 
 });
 
 //
@@ -71,6 +96,8 @@ document.addEventListener("mousemove", (e) => {
 
 let isScrubbing = false;
 let wasPaused;
+
+//pointer event
 timelineContainer.addEventListener("pointerdown", (e) => {
   timelineContainer.setPointerCapture(e.pointerId);
   isScrubbing = true;
@@ -103,6 +130,8 @@ function toggleScrubbing(e) {
     }
   }
 }
+
+//Clamp
 function clamp(min, value, max) {
   return Math.max(min, Math.min(value, max));
 }
@@ -138,22 +167,20 @@ function changePlaybackSpeed() {
 }
 
 //caption
-// const caption = video.textTracks[0];
-// caption.mode = "hidden";
+const caption = video.textTracks[0];
+caption.mode = "hidden";
 
-// captionBtn.addEventListener("click", toogleCaption);
+captionBtn.addEventListener("click", toogleCaption);
 
-// function toogleCaption() {
-//   const isHidden = caption.mode === "hidden";
-//   caption.mode = isHidden ? "showing" : "hidden";
-//   videoContainer.classList.toggle("captions", isHidden);
-// }
+function toogleCaption() {
+  const isHidden = caption.mode === "hidden";
+  caption.mode = isHidden ? "showing" : "hidden";
+  videoContainer.classList.toggle("captions", isHidden);
+}
 
 //Duration
-video.addEventListener("loadeddata", () => {
-  totalTime.textContent = formatDuration(video.duration);
-});
-
+video.addEventListener("loadeddata", () => totalTime.textContent = formatDuration(video.duration));
+video.addEventListener("timeupdate", () => totalTime.textContent = formatDuration(video.duration), {once:true})
 video.addEventListener("timeupdate", () => {
   currentTime.textContent = formatDuration(video.currentTime);
   const percent = video.currentTime / video.duration;
