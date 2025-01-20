@@ -16,33 +16,114 @@ const timeline = document.querySelector(".timeline");
 const timelineContainer = document.querySelector(".timeline-container");
 const videoContainer = document.querySelector(".videoContainer");
 const videoControls = document.querySelector(".video-controls-container");
-const hover = document.querySelector(".hover")
+const hover = document.querySelector(".hover");
+
+// let hasInteracted = false;
+// let wasPlayingBeforeLeaving = false
+// const savedTime  = localStorage.getItem('videoTime')
+// const savedPlayingState = localStorage.getItem('videoPlaying')
+
+// if (savedTime) {
+//       video.currentTime = parseFloat(savedTime)
+// }
+// if (savedPlayingState === 'true') {
+//         wasPlayingBeforeLeaving = true
+// }
+
+
+// const observer = new IntersectionObserver(entries  =>{
+//          entries.forEach(entry =>{
+//           if (!entry.isIntersecting) {
+//             if (!video.paused) {
+//                   video.pause()
+//                   console.log("video was paused");
+                  
+//             }
+//           }
+//           else{
+//           if (video.paused &&  !video.ended) {
+//                   video.play()
+//                   console.log("video is playing");
+                  
+//           }
+//         }
+//          })
+// })
+
+// observer.observe(video)
+
+let hasInteracted = false;
+let wasPlayingBeforeLeaving = false;
+
+
+const savedTime = localStorage.getItem("videoTime");
+const savedPlayingState = localStorage.getItem("videoPlaying");
+
+if (savedTime) {
+  video.currentTime = parseFloat(savedTime);
+}
+if (savedPlayingState === "true") {
+  wasPlayingBeforeLeaving = true;
+}
+
+video.addEventListener("click", () => {
+  if (!hasInteracted) {
+    video.play();
+    hasInteracted = true;
+  }
+});
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) {
+      if (!video.paused) {
+        wasPlayingBeforeLeaving = true; 
+        video.pause();
+      }
+    } else {
+      if (
+        video.paused &&
+        hasInteracted &&
+        !video.ended &&
+        wasPlayingBeforeLeaving
+      ) {
+        video.play();
+        wasPlayingBeforeLeaving = false; 
+      }
+    }
+  });
+});
+
+observer.observe(video);
+
+window.addEventListener("beforeunload", () => {
+  localStorage.setItem("videoTime", video.currentTime);
+  localStorage.setItem("videoPlaying", !video.paused);
+});
+
+setInterval(() => {
+  localStorage.setItem("videoTime", video.currentTime);
+  localStorage.setItem("videoPlaying", !video.paused);
+}, 5000);
 
 video.textTracks[0].mode = "hidden";
 
 let hoverTimeoutId;
 videoContainer.addEventListener("mouseover", setHover);
-videoContainer.addEventListener("mouseleave" , removeHover);
+videoContainer.addEventListener("mouseleave", removeHover);
 
-function setHover (){
+function setHover() {
   videoContainer.classList.add("hover");
-  keepHover()
+  keepHover();
 }
 
 function keepHover() {
-        hoverTimeoutId = setTimeout(removeHover , 3000);
+  hoverTimeoutId = setTimeout(removeHover, 3000);
 }
 
-
-function removeHover (){
-  videoContainer.classList.remove("hover");       
+function removeHover() {
+  videoContainer.classList.remove("hover");
 }
-
-
-
-
-
-
 
 document.addEventListener("keydown", (e) => {
   const tagName = document.activeElement.tagName.toLowerCase();
@@ -74,11 +155,10 @@ document.addEventListener("keydown", (e) => {
     case "arrowright":
       skip(+5);
       break;
-  } 
+  }
 });
 
 //
-
 
 //Timeline
 timelineContainer.addEventListener("mousemove", handleTimelineUpdate);
@@ -105,7 +185,7 @@ timelineContainer.addEventListener("pointerdown", (e) => {
   timelineContainer.addEventListener("pointermove", handleTimelineUpdate);
   timelineContainer.addEventListener(
     "pointerup",
-    (e) => {
+    (e)  => {
       isScrubbing = false;
       toggleScrubbing(e);
       timelineContainer.removeEventListener(
@@ -117,6 +197,8 @@ timelineContainer.addEventListener("pointerdown", (e) => {
   );
 });
 
+
+//toggle Scrubbing
 function toggleScrubbing(e) {
   const rect = timelineContainer.getBoundingClientRect();
   const percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width;
@@ -135,6 +217,8 @@ function toggleScrubbing(e) {
 function clamp(min, value, max) {
   return Math.max(min, Math.min(value, max));
 }
+
+//Timeline update
 function handleTimelineUpdate(e) {
   const rect = timelineContainer.getBoundingClientRect();
   let percent = Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width;
@@ -159,6 +243,7 @@ function handleTimelineUpdate(e) {
 //playback speed
 speedBtn.addEventListener("click", changePlaybackSpeed);
 
+//change timeline update
 function changePlaybackSpeed() {
   let newPlayback = video.playbackRate + 0.25;
   if (newPlayback > 2) newPlayback = 0.25;
@@ -172,6 +257,8 @@ caption.mode = "hidden";
 
 captionBtn.addEventListener("click", toogleCaption);
 
+
+//toogle Caption
 function toogleCaption() {
   const isHidden = caption.mode === "hidden";
   caption.mode = isHidden ? "showing" : "hidden";
@@ -179,12 +266,18 @@ function toogleCaption() {
 }
 
 //Duration
-video.addEventListener("loadeddata", () => totalTime.textContent = formatDuration(video.duration));
-video.addEventListener("timeupdate", () => totalTime.textContent = formatDuration(video.duration), {once:true})
+video.addEventListener(
+  "loadeddata",
+  () => totalTime.textContent = formatDuration(video.duration)
+);
+video.addEventListener(
+  "timeupdate",
+  () => totalTime.textContent = formatDuration(video.duration),
+  { once: true }
+);
 video.addEventListener("timeupdate", () => {
   currentTime.textContent = formatDuration(video.currentTime);
   const percent = video.currentTime / video.duration;
-
   timelineContainer.style.setProperty("--progress-position", percent);
 });
 
@@ -252,11 +345,10 @@ function toogleTheaterMode() {
 function tooogleFullScreenMode() {
   if (document.fullscreenElement == null) {
     videoContainer.requestFullscreen();
-     screen.orientation.lock("landscape");
+    screen.orientation.lock("landscape");
   } else {
     document.exitFullscreen();
   }
- 
 }
 
 function tooogleMiniPlayerMode() {
@@ -279,7 +371,7 @@ video.addEventListener("leavepictureinpicture", () => {
   videoContainer.classList.remove("mini-player");
 });
 //play/pause
-playonScreen.addEventListener("click" , tooglePlay)
+playonScreen.addEventListener("click", tooglePlay);
 
 playPauseBtn.addEventListener("click", tooglePlay);
 video.addEventListener("click", tooglePlay);
